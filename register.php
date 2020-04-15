@@ -23,43 +23,8 @@
 
 <body>
 
-  <h1 class="site-heading text-center text-white d-none d-lg-block">
-    <span class="site-heading-upper  mb-3" style="color: rgb(58, 56, 56);">BIENVENUE SUR </span>
-    <span class="site-heading-lower" style="font-weight: bold;">No Drug's  <span class="text-primary"> Space</span> </span>
-  </h1>
-
   
-  <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-    <div class="container">
-    
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item active px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="index.html">Acceuil
-             
-            </a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="about.html">A propos de nous</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="article.html">Article</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="forum.html">Forum</a>
-          </li>
-          <li class="nav-item px-lg-4">
-            <a  class="nav-link text-uppercase text-expanded " href="#" > login</a>
-        
-          </li>
-        </ul>
-        
-      </div>
-    </div>
-  </nav>
+  <?php include("header.php") ?>
   <section class="page-section clearfix">
     <div class="container">
    
