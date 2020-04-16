@@ -1,3 +1,43 @@
+<?php 
+  include("functions.php");
+  include("db/db.php");
+
+  session_start();
+
+  $db = Database::connexion();
+  $errors = ["email"=>"","password"=>""];
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $email = $_POST["email"]?$_POST["email"]:"";
+    $psd = $_POST["password"]?hash("sha256",$_POST["password"]):"";
+    
+    if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+      $client = findClient($db,$email);
+      if($client){
+        if(hash_equals($client["u_password"],$psd)){
+          $_SESSION["connected"] = true;
+          $_SESSION["nom"] = $client["nom"];
+          $_SESSION["profile"] = $client["image"];
+          header("location: index.php");
+        }else{
+          $errors["password"] = "Mot de passe Incorrect";
+        }
+      }else{
+        $errors["email"] = "Email non identifé";
+      }
+  
+    }else{
+      $errors["email"] = "Veuillez saisir un mail correct";
+    }
+    }
+    
+    
+
+  Database::deconnexion();
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -28,7 +68,7 @@
   <section class="page-section clearfix">
     <div class="container">
    
-<form class="text-center border border-light p-6" action="#!">
+<form class="text-center border border-light p-6" action="" method="post">
 
   <p class="h4 mb-4">Login</p>
   <p><a href="register.php" style="text-decoration: none;"> vous n'avez pas de compte? </a></p>
@@ -39,10 +79,11 @@
   
 
  
-  <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="Email">
+  <input type="email" id="defaultSubscriptionFormEmail" name="email" class="form-control mb-4" placeholder="Email">
+  <span><?php echo $errors["email"]; ?></span><br><br>
 
-  <input type="password" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Password">
-  
+  <input type="password" id="defaultSubscriptionFormPassword" name="password" class="form-control mb-4" placeholder="Password">
+  <span><?php echo $errors["password"]; ?></span><br><br>
 
   <button class="btn btn-info btn-block" type="submit">Login</button>  
 

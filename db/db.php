@@ -23,6 +23,28 @@ function recevMsg($db,$data){
     return ($pre->execute($data))?true:false;
 }
 
+function addArt($db,$data){
+    $pre = $db->prepare("INSERT INTO article(titre,s_titre,description,image,date_create) VALUES(?,?,?,?,Now())");
+    return ($pre->execute($data))?true:false;
+}
+
+
+function findClient($db,$email){
+    $pre = $db->prepare("SELECT nom,u_password,image FROM clients WHERE email=?");
+    $pre->execute([$email]);
+
+    return $pre->fetch();
+}
+
+function addClient($db,$coords){
+    $req = $db->prepare("INSERT INTO clients(nom,email,age,u_password,image,date_inscription) VALUES(?,?,?,?,?,Now())");
+    return ($req->execute($coords))?true:false;
+}
+
+function rcpArticles($db){
+    $articles = $db->query("SELECT * FROM article");
+    return $articles->fetchAll();
+}
 
 
 

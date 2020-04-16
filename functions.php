@@ -9,4 +9,8 @@ function vide($arr){
     foreach($el as $arr["erros"]){
         $arr[$el]="";
     }
-} ?>
+} 
+
+
+
+?>

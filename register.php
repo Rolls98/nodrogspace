@@ -1,3 +1,87 @@
+<?php 
+  
+  include("functions.php");
+  include("db/db.php");
+
+  $db = Database::connexion();
+  $ok = "";
+  if(isset($_SESSION["connected"])){
+    header("location:index.php");
+  }else{
+    $errors = ["nom"=>"","email"=>"","age"=>"","password"=>"","cfpassword"=>""];
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $valide = true;
+      $nom = $_POST["nom"]?checkInput($_POST["nom"]):"";
+      $email = $_POST["email"]?$_POST["email"]:"";
+      $age = $_POST["age"]?$_POST["age"]:"";
+      $psd = $_POST["password"]?$_POST["password"]:"";
+      $cpsd = $_POST["cfpassword"]?$_POST["cfpassword"]:"";
+
+      if(empty($nom)){
+        $valide = false;
+        $errors["nom"] = "Ce champ est obligatoire";
+      }else if(strlen($nom) < 4){
+        $valide = false;
+        $errors["nom"] = "le nom n'est pas inférieur à 4 caractères";
+      }
+
+      if(empty($email)){
+        $valide = false;
+        $errors["email"] = "Veuillez entrer votre mail";
+      }else if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+        $valide = false;
+        $errors["email"] = "Veuillez saisir un mail correct svp !";
+      }
+
+      if(!is_numeric($age)){
+        $valide = false;
+        $errors["age"] = "Veuillez choisir votre age";
+      }else if($age<16){
+        $valide = false;
+        $errors["age"] = "Age non autorisé";
+      }
+
+      if(empty($psd)){
+        $valide = false;
+        $errors["password"] = "Veuillez entrer un mot de passe";
+      }else if(strlen($psd) < 8){
+        $valide = false;
+        $errors["password"] = "Le mot de passe est faible, il doit etre au moins 8 caractères";
+      }
+
+      if(!empty($cpsd)){
+        if($cpsd !== $psd){
+          $valide  = false;
+          $errors["password"] = "les deux mot de passe ne correspond pas";
+        }
+      }else{
+        $valide  = false;
+        $errors["password"] = "les deux mot de passe ne correspond pas";
+      }
+
+
+      if($valide){
+        $coords = [$nom,$email,intval($age),hash("sha256",$psd),"default_icon.jpg"];
+       # var_dump($coords);
+        if(addClient($db,$coords)){
+          $ok = "Inscription effectué avec succèss";
+          sleep(5);
+          header("location:login.php");
+        }else{
+          $ok = "Erreur lors de l'inscription";
+        }
+      }
+
+      
+    }
+
+  }
+
+  Database::deconnexion();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -28,27 +112,65 @@
   <section class="page-section clearfix">
     <div class="container">
    
-<form class="text-center border border-light p-6" action="#!">
+<form class="text-center border border-light p-6" action="" method="post">
 
-  <p class="h4 mb-4">Register</p>
+  <p class="h4 mb-4">Register</p> 
+
+  <input type="text" name="nom" value="<?php echo ($nom)?$nom:"" ?>" class="form-control mb-4" placeholder="Nom">
+  <span><?php echo $errors["nom"] ?></span>
+  <input type="email" name="email" value="<?php echo ($email)?$email:"" ?>" class="form-control mb-4" placeholder="Email">
+  <span><?php echo $errors["email"] ?></span>
+  <select name="age" class="form-control mb-4">
+      <option value="16" selected>16</option>
+      <option value="17" >17</option>
+      <option value="18" >19</option>
+      <option value="20" >20</option>
+      <option value="21" >21</option>
+      <option value="22" >22</option>
+      <option value="23" >23</option>
+      <option value="24" >24</option>
+      <option value="25" >25</option>
+      <option value="26" >26</option>
+      <option value="27" >27</option>
+      <option value="28" >28</option>
+      <option value="29" >29</option>
+      <option value="30" >30</option>
+      <option value="31" >31</option>
+      <option value="32" >32</option>
+      <option value="33" >33</option>
+      <option value="34" >34</option>
+      <option value="35" >35</option>
+      <option value="36" >36</option>
+      <option value="37" >37</option>
+      <option value="38" >38</option>
+      <option value="39" >39</option>
+      <option value="40" >40</option>
+      <option value="41" >41</option>
+      <option value="42" >42</option>
+      <option value="43" >43</option>
+      <option value="44" >44</option>
+      <option value="45" >45</option>
+      <option value="46" >46</option>
+      <option value="47" >47</option>
+      <option value="48" >48</option>
+      <option value="49" >49</option>
+      <option value="50" >50</option>
+      <option value="51" >51</option>
+      <option value="52" >52</option>
+      <option value="53" >53</option>
+      <option value="54" >54</option>
+      <option value="55" >55</option>
+      <option value="56" >56</option>
+  </select>
+  <span><?php echo $errors["age"] ?></span>
+
+  <input type="password"  name="password" class="form-control mb-4" placeholder="Password">
   
- 
-
-
- 
-  
-
-  <input type="text"  class="form-control mb-4" placeholder="Nom">
-
-  <input type="email"  class="form-control mb-4" placeholder="Email">
-
-  <input type="password"  class="form-control mb-4" placeholder="Password">
-
-  <input type="password"  class="form-control mb-4" placeholder=" Confirm Password">
-  
+  <input type="password" name="cfpassword"  class="form-control mb-4" placeholder=" Confirm Password">
+  <span><?php echo $errors["password"] ?></span>
 
   <button class="btn btn-info btn-block" type="submit">sign up</button>  
-
+  <span><?php echo $ok ?></span>
 
 </form>
 
