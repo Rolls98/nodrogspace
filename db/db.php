@@ -30,7 +30,7 @@ function addArt($db,$data){
 
 
 function findClient($db,$email){
-    $pre = $db->prepare("SELECT nom,u_password,image FROM clients WHERE email=?");
+    $pre = $db->prepare("SELECT * FROM clients WHERE email=?");
     $pre->execute([$email]);
 
     return $pre->fetch();
@@ -44,6 +44,11 @@ function addClient($db,$coords){
 function rcpArticles($db){
     $articles = $db->query("SELECT * FROM article");
     return $articles->fetchAll();
+}
+
+function updateClient($db,$infos){
+    $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=? WHERE id=?");
+    return ($req->execute($infos))?true:false;
 }
 
 

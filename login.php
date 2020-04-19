@@ -16,6 +16,14 @@
         if(hash_equals($client["u_password"],$psd)){
           $_SESSION["connected"] = true;
           $_SESSION["nom"] = $client["nom"];
+          $_SESSION["id"] = $client["id"];
+          $_SESSION["username"] = $client["username"];
+          $_SESSION["prenom"] = $client["prenom"];
+          $_SESSION["pays"] = $client["pays"];
+          $_SESSION["ville"] = $client["ville"];
+          $_SESSION["description"] = $client["description"];
+          $_SESSION["email"] = $client["email"];
+          
           $_SESSION["profile"] = $client["image"];
           header("location: index.php");
         }else{

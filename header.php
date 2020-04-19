@@ -62,7 +62,7 @@
                     echo '</a>';
                 echo'<div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
           aria-labelledby="navbarDropdownMenuLink-55">';
-          echo '<a class="dropdown-item" href="#">Profile</a> ';
+          echo '<a class="dropdown-item" href="user/examples/index.php">Profile</a> ';
           
           echo '<a class="dropdown-item" href="deconnexion.php">Deconnection</a>';
           echo '</div>';
