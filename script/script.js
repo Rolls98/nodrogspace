@@ -29,9 +29,19 @@ $(document).ready(() => {
           $(".error_ville").html(errors.errorVille);
           $(".error_msg").html(errors.errorMessage);
         } else {
+          let inputs = $("input");
           elements.forEach((el) => {
             $(el).html("");
           });
+
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = "";
+          }
+
+          $("select")[0].selectedIndex = 0;
+          $("textarea")[0].value = "";
+
+
           $(".msg_success").html(result.success);
         }
       },

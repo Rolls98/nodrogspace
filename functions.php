@@ -6,8 +6,8 @@ function checkInput($data){
 }
 
 function vide($arr){
-    foreach($el as $arr["erros"]){
-        $arr[$el]="";
+    foreach($arr as $key=>$value){
+        $arr[$key]="";
     }
 } 
 
