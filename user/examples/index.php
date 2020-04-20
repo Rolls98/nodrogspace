@@ -9,6 +9,7 @@
   }else{
     $db = Database::connexion();
     $ok = "";
+    $type_allows = [".png",".jpg",".jpeg",".gif"];
     $error = [
       "nom"=>"",
       "prenom"=>"",
@@ -17,7 +18,8 @@
       "ville"=>"",
       "pays"=>"",
       "description"=>"",
-      "addresse"=>""
+      "addresse"=>"",
+      "image"=>""
     ];
     $id = $_SESSION["id"];
     $client = findClient($db,$_SESSION["email"]);
@@ -38,18 +40,49 @@
         $email = $_POST["email"]?checkInput($_POST["email"]):"";
         $addresse = $_POST["addresse"]?checkInput($_POST["addresse"]):"";
         $ville = $_POST["ville"]?checkInput($_POST["ville"]):"";
-        $pays = $_POST["pays"]?checkInput($_POST["pays"]):"";
+        $pays = $_POST["pays"]?$_POST["pays"]:"";
         $description = $_POST["description"]?checkInput($_POST["description"]):"";
-
+        $name_image = $_FILES["image"]["name"]?$_FILES["image"]["name"]:$client["image"];
+        $tmpPath = $_FILES["image"]["tmp_name"]?$_FILES["image"]["tmp_name"]:"";
         $elements = ["nom"=>$nom,"username"=>$username,"prenom"=>$prenom,"email"=>$email,"addresse"=>$addresse,"ville"=>$ville,"pays"=>$pays,"description"=>$description];
+        $type = strrchr($name_image,".");
+        $nameWhitoutExt = substr($name_image,0,strpos($name_image,$type));
+       
+
+        if($name_image != $client["image"]){
+          if(file_exists("../../img/".$name_image)){
+          
+            $name_image = $nameWhitoutExt." ".date("d-m-Y H-i-s").$type;  
+          }
+        }
+
+        if(!empty($tmpPath)){
+          if(in_array($type,$type_allows)){
+       
+                  if(move_uploaded_file($tmpPath,"../../img/".$name_image)){
+                      $error["image"] = "image upload";
+                  }else{
+                      $cool = false;
+                      $error["image"] = "image no upload, probleme lors du chargement";
+                  }
+              
+          }else{
+              $cool = false;
+              $error["image"] = "le type n'est pas autorisé, veuillez des images de types <<png,jpeg,jpg,gif>>";
+          }
+      }
 
         foreach($elements as $key => $value){
           verifyEmpty($value,$key);
         }        
 
         if($cool){
-          $infos = [$username,$nom,$prenom,$email,$addresse,$ville,$pays,$description,$id];
+          $infos = [$username,$nom,$prenom,$email,$addresse,$ville,$pays,$description,$name_image,$id];
           if(updateClient($db,$infos)){
+            $_SESSION["profile"] = $name_image;
+            $_SESSION["nom"] = $nom;
+            $_SESSION["prenom"] = $prenom;
+            $_SESSION["description"] = $description;
             $ok = "Mise a jour effectué avec succès";
           }else{
             $ok = "Erreur survenue lors de la mise a jour de votre profile, veuillez contacter l'admin";
@@ -138,7 +171,7 @@
                   <p class="card-category">Ajouter des informations</p>
                 </div>
                 <div class="card-body">
-                  <form action="" method="post">
+                  <form action="" method="post" enctype="multipart/form-data">
                     <div class="row">
                      
                       <div class="col-md-3">
@@ -197,6 +230,14 @@
                         </div>
                         <span style="color:red"><?php echo $error["pays"] ?></span>
                       </div>
+
+                      <div class="col-md-4">
+                        <div class="custom-file">
+                          <label class="custom-file-label" for="image">Choisir une image</label>
+                          <input type="file" id="image" class="custom-file-input" name="image">
+                        </div>
+                        <span style="color:red"><?php echo $error["image"] ?></span>
+                      </div>
                      
                     </div>
                     <div class="row">
@@ -222,7 +263,7 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                    <img class="img" src="../../img/<?php echo $_SESSION["profile"] ?>" />
                   </a>
                 </div>
                 <div class="card-body">

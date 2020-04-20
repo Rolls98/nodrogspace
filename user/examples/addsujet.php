@@ -133,14 +133,14 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                    <img class="img" src="../../img/<?php echo $_SESSION["profile"] ?>" />
                   </a>
                 </div>
                 <div class="card-body">
-                  <h6 class="card-category">Nom prenom</h6>
+                  <h6 class="card-category"><?php echo $_SESSION["nom"]." ".$_SESSION["prenom"]?></h6>
                  
                   <p class="card-description">
-                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                    <?php echo $_SESSION["description"] ?>
                   </p>
                   <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
                 </div>

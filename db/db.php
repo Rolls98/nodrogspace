@@ -47,7 +47,7 @@ function rcpArticles($db){
 }
 
 function updateClient($db,$infos){
-    $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=? WHERE id=?");
+    $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
     return ($req->execute($infos))?true:false;
 }
 
