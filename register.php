@@ -2,9 +2,10 @@
   
   include("functions.php");
   include("db/db.php");
-
+  
   $db = Database::connexion();
   $ok = "";
+  $nom=$email = "";
   if(isset($_SESSION["connected"])){
     header("location:index.php");
   }else{

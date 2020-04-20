@@ -2,7 +2,7 @@
   include("functions.php");
   include("db/db.php");
 
-  session_start();
+  
 
   $db = Database::connexion();
   $errors = ["email"=>"","password"=>""];
@@ -13,6 +13,7 @@
     if(filter_var($email,FILTER_VALIDATE_EMAIL)){
       $client = findClient($db,$email);
       if($client){
+        session_start();
         if(hash_equals($client["u_password"],$psd)){
           $_SESSION["connected"] = true;
           $_SESSION["nom"] = $client["nom"];
