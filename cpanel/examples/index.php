@@ -230,11 +230,7 @@
             </div>
             <div class="col-md-4">
               <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
+                
                <?php include("partials/card.php") ?>
               </div>
             </div>

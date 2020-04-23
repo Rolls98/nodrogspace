@@ -69,7 +69,7 @@ function updateClient($db,$infos){
 }
 
 function updateadmin($db,$infos){
-    $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
+    $req = $db->prepare("UPDATE admins SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
     return ($req->execute($infos))?true:false;
 }
 
