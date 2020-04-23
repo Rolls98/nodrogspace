@@ -20,6 +20,7 @@
     $a_errors = array("titre"=>"","s_titre"=>"","description"=>"","image"=>"");
     $type_allows = [".png",".jpg",".jpeg",".gif"];
     $ok = "";
+    $addArt = true;
 
     if($_SERVER["REQUEST_METHOD"] === "POST"){
         $ar_ok = true;
@@ -189,11 +190,6 @@
             </div>
             <div class="col-md-4">
               <div class="card card-profile">
-                <div class="card-avatar">
-                  <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/marc.jpg" />
-                  </a>
-                </div>
                 <?php include("partials/card.php"); ?>
               </div>
             </div>

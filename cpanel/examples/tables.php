@@ -11,7 +11,7 @@
     $db = Database::connexion();
     $clients = findAllClients($db);
 
-    var_dump($db);
+    $tables =true;
   }
 
 ?>

@@ -1,4 +1,8 @@
-
+<div class="card-avatar">
+    <a href="#pablo">
+        <img class="img" src="../../img/users/<?php echo $_SESSION["a_profile"] ?>" />
+    </a>
+</div>
  
  <div class="card-body">
     <h6 class="card-category"><?php echo $_SESSION["a_nom"]." ".$_SESSION["a_prenom"]; ?></h6>             

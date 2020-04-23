@@ -9,6 +9,7 @@
   }else{
     $db = Database::connexion();
     $ok = "";
+    $index = true;
     $type_allows = [".png",".jpg",".jpeg",".gif"];
     $error = [
       "nom"=>"",
@@ -50,7 +51,7 @@
        
 
         if($name_image != $admin["image"]){
-          if(file_exists("../../img/".$name_image)){
+          if(file_exists("../../img/users/".$name_image)){
           
             $name_image = $nameWhitoutExt." ".date("d-m-Y H-i-s").$type;  
           }
@@ -59,7 +60,7 @@
         if(!empty($tmpPath)){
           if(in_array($type,$type_allows)){
        
-                  if(move_uploaded_file($tmpPath,"../../img/".$name_image)){
+                  if(move_uploaded_file($tmpPath,"../../img/users/".$name_image)){
                       $error["image"] = "image upload";
                   }else{
                       $cool = false;
@@ -139,56 +140,72 @@
                   <p class="card-category">Ajouter des informations</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="" method="post" enctype="multipart/form-data">
                     <div class="row">
                      
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nom d'utilisateur</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="username" value="<?php echo $username; ?>">
+                          <span style="color:red"><?php echo $error["username"] ?></span>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Adresse email</label>
-                          <input type="email" class="form-control">
+                          <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
                         </div>
+                        <span style="color:red"><?php echo $error["email"] ?></span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Prenom</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control"  name="prenom" value="<?php echo $prenom; ?>">
+                          
                         </div>
+                        <span style="color:red"><?php echo $error["prenom"] ?></span>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nom</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="nom" value="<?php echo $nom; ?>">
                         </div>
+                        <span style="color:red"><?php echo $error["nom"] ?></span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="bmd-label-floating">Adresse</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="addresse" value="<?php echo $addresse; ?>">
                         </div>
+                        <span style="color:red"><?php echo $error["addresse"] ?></span>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">Ville</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="ville" value="<?php echo $ville; ?>">
                         </div>
+                        <span style="color:red"><?php echo $error["ville"] ?></span>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label class="bmd-label-floating">pays</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="pays" value="<?php echo $pays; ?>">
                         </div>
+                        <span style="color:red"><?php echo $error["pays"] ?></span>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="custom-file">
+                          <label class="custom-file-label" for="image">Choisir une image</label>
+                          <input type="file" id="image" class="custom-file-input" name="image">
+                        </div>
+                        <span style="color:red"><?php echo $error["image"] ?></span>
                       </div>
                      
                     </div>
@@ -197,14 +214,16 @@
                         <div class="form-group">
                           <label>Description</label>
                           <div class="form-group">
-                            <label class="bmd-label-floating">Entrez une petite description sur vous.</label>
-                            <textarea class="form-control" rows="5"></textarea>
+                            <label class="bmd-label-floating"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus unde quos velit optio eius rerum quia perspiciatis et voluptatum, voluptates quod impedit neque quisquam delectus similique repellat in blanditiis officia!.</label>
+                            <textarea class="form-control" rows="5" name="description"><?php echo $description; ?></textarea>
                           </div>
+                          <span style="color:red"><?php echo $error["description"] ?></span>
                         </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">valider</button>
                     <div class="clearfix"></div>
+                    <span style="color:<?php echo strchr($ok,"avec")?"green":"red"; ?>"><?php echo $ok;?></span>
                   </form>
                 </div>
               </div>

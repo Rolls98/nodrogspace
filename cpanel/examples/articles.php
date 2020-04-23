@@ -9,6 +9,7 @@
   }else{
     include ("../../db/db.php");
     $db = Database::connexion();
+    $lsArt = true;
     $articles = findAllArticles($db);
   }
 
