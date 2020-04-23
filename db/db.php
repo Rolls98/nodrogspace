@@ -41,6 +41,11 @@ function findAllClients($db){
     return $pre->fetchAll();
 }
 
+function findAllArticles($db){
+    $pre = $db->query("SELECT id,titre,s_titre,image,description FROM article ");
+    return $pre->fetchAll();
+}
+
 function findAdmin($db,$email){
     $pre = $db->prepare("SELECT * FROM admins WHERE email=?");
     $pre->execute([$email]);

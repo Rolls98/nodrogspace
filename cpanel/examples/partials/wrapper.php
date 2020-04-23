@@ -26,6 +26,12 @@
             </a>
           </li>
           <li class="nav-item  ">
+            <a class="nav-link" href="articles.php">
+              <i class="material-icons">plus</i>
+              <p>Liste des articles </p>
+            </a>
+          </li>
+          <li class="nav-item  ">
             <a class="nav-link" href="typography.php">
               <i class="material-icons">plus</i>
               <p>Typography</p>

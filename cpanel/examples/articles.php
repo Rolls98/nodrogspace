@@ -9,9 +9,7 @@
   }else{
     include ("../../db/db.php");
     $db = Database::connexion();
-    $clients = findAllClients($db);
-
-    var_dump($db);
+    $articles = findAllArticles($db);
   }
 
 ?>
@@ -52,8 +50,8 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Les utilisateurs</h4>
-                  <p class="card-category"> Toutes les personnes inscritent sur la plateforme</p>
+                  <h4 class="card-title ">Les articles</h4>
+                  <p class="card-category"> Tous les articles sur la plateforme</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -63,16 +61,16 @@
                           ID
                         </th>
                         <th>
-                          Nom
+                          Titre
                         </th>
                         <th>
-                          Pays
+                          Sous_titre
                         </th>
                         <th>
-                          Ville
+                          image
                         </th>
                         <th>
-                          Email
+                          description
                         </th>
                         <th>
                           Action
@@ -81,13 +79,13 @@
                       <tbody>
 
                         <?php 
-                            foreach($clients as $key => $client){
+                            foreach($articles as $key => $article){
                               echo "<tr>";
-                                echo "<td>".$client["id"]."</td>";
-                                echo "<td>".$client["nom"]."</td>";
-                                echo "<td>".$client["pays"]."</td>";
-                                echo "<td>".$client["ville"]."</td>";
-                                echo "<td>".$client["email"]."</td>";
+                                echo "<td>".$article["id"]."</td>";
+                                echo "<td>".$article["titre"]."</td>";
+                                echo "<td>".$article["s_titre"]."</td>";
+                                echo "<td>".substr($article["image"],0,10)."...</td>";
+                                echo  "<td>".substr($article["description"],0,20)."...</td>";
                                 echo '<td class="text-primary">';
                                   echo'<a href="#"><img src="../assets/img/add_box-24px.svg"></a>';
                                   echo '<a href="#"><img src="../assets/img/create-24px.svg"></a>';
