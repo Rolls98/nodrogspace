@@ -1,6 +1,8 @@
 <?php 
 
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 ?>
 
@@ -57,7 +59,7 @@
                 echo '<li class="nav-item px-lg-4">';
                       echo '<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">';
-                      echo '<img src="img/'.$_SESSION["profile"].'" class="rounded-circle z-depth-0"
+                      echo '<img src="img/users/'.$_SESSION["profile"].'" class="rounded-circle z-depth-0"
               alt="avatar image" width="30" height="30">';
                     echo '</a>';
                 echo'<div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"

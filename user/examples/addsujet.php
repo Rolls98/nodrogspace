@@ -133,7 +133,7 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../../img/<?php echo $_SESSION["profile"] ?>" />
+                    <img class="img" src="../../img/users/<?php echo $_SESSION["profile"] ?>" />
                   </a>
                 </div>
                 <div class="card-body">
@@ -150,11 +150,7 @@
         </div>
       </div>
       
-      <script>
-        const x = new Date().getFullYear();
-        let date = document.getElementById('date');
-        date.innerHTML = '&copy; ' + x + date.innerHTML;
-      </script>
+      
     </div>
   </div>
  

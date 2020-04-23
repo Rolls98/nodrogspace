@@ -36,6 +36,18 @@ function findClient($db,$email){
     return $pre->fetch();
 }
 
+function findAllClients($db){
+    $pre = $db->query("SELECT id,nom,pays,ville,email FROM clients ");
+    return $pre->fetchAll();
+}
+
+function findAdmin($db,$email){
+    $pre = $db->prepare("SELECT * FROM admins WHERE email=?");
+    $pre->execute([$email]);
+
+    return $pre->fetch();
+}
+
 function addClient($db,$coords){
     $req = $db->prepare("INSERT INTO clients(nom,email,age,u_password,image,date_inscription) VALUES(?,?,?,?,?,Now())");
     return ($req->execute($coords))?true:false;
@@ -47,6 +59,11 @@ function rcpArticles($db){
 }
 
 function updateClient($db,$infos){
+    $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
+    return ($req->execute($infos))?true:false;
+}
+
+function updateadmin($db,$infos){
     $req = $db->prepare("UPDATE clients SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
     return ($req->execute($infos))?true:false;
 }

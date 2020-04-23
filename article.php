@@ -43,7 +43,7 @@
                     </h2>
                     </div>
                   </div>
-                  <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="img/'.$value["image"].'" alt="" />
+                  <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="img/articles/'.$value["image"].'" alt="" />
                   <div class="product-item-description d-flex descr">
                     <div class="bg-faded p-5 rounded">
                       <p class="mb-0">'.$value["description"].'

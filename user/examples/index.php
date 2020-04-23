@@ -50,7 +50,7 @@
        
 
         if($name_image != $client["image"]){
-          if(file_exists("../../img/".$name_image)){
+          if(file_exists("../../img/users/".$name_image)){
           
             $name_image = $nameWhitoutExt." ".date("d-m-Y H-i-s").$type;  
           }
@@ -59,7 +59,7 @@
         if(!empty($tmpPath)){
           if(in_array($type,$type_allows)){
        
-                  if(move_uploaded_file($tmpPath,"../../img/".$name_image)){
+                  if(move_uploaded_file($tmpPath,"../../img/users/".$name_image)){
                       $error["image"] = "image upload";
                   }else{
                       $cool = false;
@@ -263,7 +263,7 @@
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../../img/<?php echo $_SESSION["profile"] ?>" />
+                    <img class="img" src="../../img/users/<?php echo $_SESSION["profile"] ?>" />
                   </a>
                 </div>
                 <div class="card-body">
