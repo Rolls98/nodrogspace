@@ -91,7 +91,7 @@
                                 echo '<td class="text-primary">';
                                   echo'<a href="#"><img src="../assets/img/add_box-24px.svg"></a>';
                                   echo '<a href="#"><img src="../assets/img/create-24px.svg"></a>';
-                                  echo'<a href="#"><img src="../assets/img/delete-24px.svg"></a>';
+                                  echo'<a href="actions/delClient.php?id='.$client["id"].'"><img src="../assets/img/delete-24px.svg"></a>';
                                echo '</td>';
                                 echo "</tr>";
                             }

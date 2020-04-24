@@ -1,18 +1,90 @@
-<?php 
+ <?php 
+    
+     if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-  if(session_status() === PHP_SESSION_NONE){
-    session_start();
-  }
+    if(!isset($_SESSION["a_connected"])){
+      header("location:login.php");
+    }
+ 
+ ?>
 
-  if(!isset($_SESSION["a_connected"])){
-    location("header:login.php");
-  }else{
-    include ("../../db/db.php");
+ <?php
+
+    include("../../../db/db.php");
+    include("../../../functions.php");
+
     $db = Database::connexion();
-    $lsArt = true;
-    $articles = findAllArticles($db);
-  }
+    $id = isset($_GET["id"])?$_GET["id"]:"";
+    $art = findArt($db,$id);
+    $a_errors = array("titre"=>"","s_titre"=>"","description"=>"","image"=>"");
+    $type_allows = [".png",".jpg",".jpeg",".gif"];
+    $ok = "";
+    $addArt = true;
 
+   
+    #initialisation
+    $titre = $art["titre"];
+    $s_titre = $art["s_titre"];
+    $descr = $art["description"];
+    $i_name = $art["image"];
+
+    if($_SERVER["REQUEST_METHOD"] === "POST"){
+        $ar_ok = true;
+        $titre =$_POST["titre"]?checkInput($_POST["titre"]):$art["titre"];
+        $s_titre = $_POST["s_titre"]?checkInput($_POST["s_titre"]):$art["s_titre"];
+        $desc = $_POST["description"]?checkInput($_POST["description"]):$art["description"];
+        $tmp = $_FILES["fichier"]["tmp_name"]?$_FILES["fichier"]["tmp_name"]:"";
+        $i_name = $_FILES["fichier"]["name"]?$_FILES["fichier"]["name"]:$art["image"];
+        $type = strrchr($i_name,".");
+
+        if(empty($titre)){
+            $ar_ok = false;
+            $a_errors["titre"] = "Ce champ ne doit pas etre vide";
+        }
+
+        if(empty($s_titre)){
+            $ar_ok = false;
+            $a_errors["s_titre"] = "Ce champ ne doit pas etre vide";
+        }
+
+        if(empty($desc)){
+            $ar_ok = false;
+            $a_errors["description"] = "Ce champ ne doit pas etre vide";
+        }
+
+        if(!empty($tmp)){
+            if(in_array($type,$type_allows)){
+                if(file_exists("../../../img/articles/".$i_name)){
+                    $ar_ok = false;
+                    $a_errors["image"] = "le fichier existe déja, veuillez renommé ou changer d'image";
+                }else{
+                    if(move_uploaded_file($tmp,"../../../img/articles/".$i_name)){
+                        $a_errors["image"] = "";
+                    }else{
+                        $ar_ok = false;
+                        $a_errors["image"] = "image no upload, probleme lors du chargement";
+                    }
+                }
+            }else{
+                $ar_ok = false;
+                $a_errors["image"] = "le type n'est pas autorisé, veuillez des images de types <<png,jpeg,jpg,gif>>";
+            }
+        }
+
+
+        if($ar_ok){
+            $article = [$titre,$s_titre,$desc,$i_name,$id];
+            if(updateArt($db,$article)){
+                header("location:../articles.php");
+            }else{
+                echo "l'article n'a pas été ajouté";
+            }
+        }
+    }
+
+    Database::deconnexion()
 ?>
 
 
@@ -21,8 +93,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     no drug's space
@@ -32,81 +104,101 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
  
-  <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+  <link href="../../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
 
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="../../assets/demo/demo.css" rel="stylesheet" />
+
+  <style>
+    span{
+      color:red;
+    }
+  </style>
 </head>
 
 <body class="dark-edition">
-  <?php include("partials/wrapper.php") ?>
+
+    <?php include("../partials/wrapper.php"); ?>
     <div class="main-panel">
      
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
         
       </nav>
-      
+      <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Les articles</h4>
-                  <p class="card-category"> Tous les articles sur la plateforme</p>
+                  <h4 class="card-title">Creer un article</h4>
+                  
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead class=" text-primary">
-                        <th>
-                          ID
-                        </th>
-                        <th>
-                          Titre
-                        </th>
-                        <th>
-                          Sous_titre
-                        </th>
-                        <th>
-                          image
-                        </th>
-                        <th>
-                          description
-                        </th>
-                        <th>
-                          Action
-                        </th>
-                      </thead>
-                      <tbody>
-
-                        <?php 
-                            foreach($articles as $key => $article){
-                              echo "<tr>";
-                                echo "<td>".$article["id"]."</td>";
-                                echo "<td>".$article["titre"]."</td>";
-                                echo "<td>".$article["s_titre"]."</td>";
-                                echo "<td>".substr($article["image"],0,10)."...</td>";
-                                echo  "<td>".substr($article["description"],0,20)."...</td>";
-                                echo '<td class="text-primary">';
-                                  echo'<a href="#"><img src="../assets/img/add_box-24px.svg"></a>';
-                                  echo '<a href="actions/mod.php?id='.$article["id"].'"><img src="../assets/img/create-24px.svg"></a>';
-                                  echo'<a href="actions/delArt.php?id='.$article["id"].'"><img src="../assets/img/delete-24px.svg"></a>';
-                               echo '</td>';
-                                echo "</tr>";
-                            }
-                        ?>
-                        
-                      </tbody>
-                    </table>
-                  </div>
+                  <form action="" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                     
+                      
+                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Titre</label>
+                          <input type="text" class="form-control" name="titre" value="<?php echo $titre ?>">
+                        </div>
+                        <span><?php echo $a_errors["titre"] ?></span>
+                      </div>
+                     
+                    </div>
+                   
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Second Titre</label>
+                          <input type="text" class="form-control" name="s_titre" value="<?php echo $s_titre ?>">
+                        </div>
+                        <span><?php echo $a_errors["s_titre"] ?></span>
+                      </div>
+                     
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating" for="image">Image</label>
+                          <input type="file" class="form-control" name="fichier" id="image">
+                        </div>
+                        <span><?php echo $a_errors["image"] ?></span>
+                      </div>
+                     
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Description</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating"> Ajouter le contenu de votre article</label>
+                            <textarea class="form-control" rows="5" name="description"><?php echo $descr ?></textarea>
+                          </div>
+                          <span><?php echo $a_errors["description"] ?></span>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">valider</button>
+                    <div class="clearfix"></div>
+                    <span style="color:green"><?php echo isset($ok)?$ok:"" ;?></span>
+                  </form>
                 </div>
               </div>
             </div>
-          
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <?php include("../partials/card.php"); ?>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    
+      
       <script>
         const x = new Date().getFullYear();
         let date = document.getElementById('date');
@@ -114,6 +206,8 @@
       </script>
     </div>
   </div>
+ 
+
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>

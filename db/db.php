@@ -36,6 +36,14 @@ function findClient($db,$email){
     return $pre->fetch();
 }
 
+
+function findArt($db,$id){
+    $pre = $db->prepare("SELECT * FROM article WHERE id=?");
+    $pre->execute([$id]);
+
+    return $pre->fetch();
+}
+
 function findAllClients($db){
     $pre = $db->query("SELECT id,nom,pays,ville,email FROM clients ");
     return $pre->fetchAll();
@@ -58,6 +66,16 @@ function addClient($db,$coords){
     return ($req->execute($coords))?true:false;
 }
 
+function delClient($db,$id){
+    $req = $db->prepare("DELETE FROM clients WHERE id=?");
+    return ($req->execute([$id]))?true:false;
+}
+
+function delArt($db,$id){
+    $req = $db->prepare("DELETE FROM article WHERE id=?");
+    return ($req->execute([$id]))?true:false;
+}
+
 function rcpArticles($db){
     $articles = $db->query("SELECT * FROM article");
     return $articles->fetchAll();
@@ -71,6 +89,11 @@ function updateClient($db,$infos){
 function updateadmin($db,$infos){
     $req = $db->prepare("UPDATE admins SET  username = ?,nom = ?,prenom=?,email = ?,addresse = ?,ville=?,pays=?,description=?,image=? WHERE id=?");
     return ($req->execute($infos))?true:false;
+}
+
+function updateArt($db,$data){
+    $pre = $db->prepare("UPDATE article SET titre=?,s_titre=?,description=?,image=? WHERE id=?");
+    return ($pre->execute($data))?true:false;
 }
 
 
