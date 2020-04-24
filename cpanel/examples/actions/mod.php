@@ -117,7 +117,55 @@
 
 <body class="dark-edition">
 
-    <?php include("../partials/wrapper.php"); ?>
+    <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
+     
+      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+          Creative Tim
+        </a></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          
+          <li class="nav-item ">
+            <a class="nav-link" href="../index.php">
+              <i class="material-icons">person</i>
+              <p>Mon Profile</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../addartcile.php">
+              <i class="material-icons">plus</i>
+              <p>Ajouter un article</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="../tables.php">
+              <i class="material-icons">plus</i>
+              <p>Liste des utilisateurs </p>
+            </a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link" href="../articles.php">
+              <i class="material-icons">plus</i>
+              <p>Liste des articles </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../typography.php">
+              <i class="material-icons">plus</i>
+              <p>Typography</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="../deconnexion.php">
+             
+              <p>Deconnection</p>
+            </a>
+          </li>
+         
+        </ul>
+      </div>
+    </div>
     <div class="main-panel">
      
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -130,7 +178,7 @@
             <div class="col-md-8">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title">Creer un article</h4>
+                  <h4 class="card-title">Modifier un article</h4>
                   
                 </div>
                 <div class="card-body">
@@ -192,7 +240,19 @@
             </div>
             <div class="col-md-4">
               <div class="card card-profile">
-                <?php include("../partials/card.php"); ?>
+                <div class="card-avatar">
+                <a href="#pablo">
+                    <img class="img" src="../../../img/users/<?php echo $_SESSION["a_profile"] ?>" />
+                </a>
+            </div>
+ 
+            <div class="card-body">
+                <h6 class="card-category"><?php echo $_SESSION["a_nom"]." ".$_SESSION["a_prenom"]; ?></h6>             
+                <p class="card-description">
+                    <?php echo $_SESSION["a_description"]; ?>
+                </p>
+                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
+            </div>
               </div>
             </div>
           </div>
