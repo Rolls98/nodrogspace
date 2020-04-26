@@ -1,3 +1,17 @@
+<?php 
+
+  include("db/db.php");
+
+  $db = Database::connexion();
+
+  $sujets = findAllSuj($db);
+
+  $cats = findAllCat($db);
+
+  Database::deconnexion();
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -48,95 +62,112 @@
 
   <?php $forum = true ?>
   <?php include("header.php") ?>
-  <section class="page-section cta">
-      <div class="container">
-        <div class="row">
-          <div class="barderecherche">
-           
-           <input class="form-control" type="text"  id="myInput" onkeyup="myFunction()" placeholder="Rechercher une catégorie" aria-label="Search"> 
-           <ul id="myUL" style="list-style: none;">
-            <li><a class="categorie" nav-link href="#"  style="text-decoration: none;" >Overdose</a></li>
-            <li><a class="categorie"href="#"  style="text-decoration: none;">Cocaine</a></li>
-          
-            <li><a class="categorie" href="#"  style="text-decoration: none;">Crack</a></li>
-            <li><a  class="categorie" href="#"  style="text-decoration: none;">Canabis</a></li>
-          </ul>
-          </div>
-          <div class="col-xl-9 mx-auto">
+        <nav class="categorie">
+                <?php  
+
+                  for($i = 0;$i<count($cats);$i++){
+                    echo '<button onclick="showContents('.$i.')" class="btn btn'.$cats[$i]["id"].'">'.$cats[$i]["name"].'</button>';
+                  }
+
+                ?>
+                
+        </nav>
+    <section class="page-section cta">
+            <div class="col-xl-9 mx-auto">
+            <?php 
+            foreach($sujets as $key => $sujet){
+              foreach($cats as $key => $cat){
+                if($cat["id"] == $sujet["cat"]){
+                  $cat_name = $cat["name"];
+                  $cat_id = $cat["id"];
+                break;
+                }
+              }
+              echo '<article class="box art art'.$cat_id.'">
             <div class="cta-inner  rounded">
-              
-                <div id="aniki">
-                 
-                    <div class="">
-                                        <div class="">
-                                <img alt="" class="" src="" width="35" height="35">                </div>
-                                    <div class="">
-                            <strong>Le Pélican</strong>
-                            <strong class="categorie" id="categorie" ><span>Crack</span></strong>
-                        </div>
-            
-                        
-                        <div class="comment-meta commentmetadata">
-                            23 septembre 2019            </div>
-                    </div>
-            
-                    <div class="aniki">
-                        <p>Bonjour Nancy,</p>
-                        Bonjour. Je prends du tramadol ( 350mg/jour) depuis très longtemps pour une polyarthrite. J’ai une grosse poussée depuis quelques semaines et hier m’a rhumatologue m’a fait supprimer le tramadol et remplacer par un comprimé de valtran 100 retard le soir. Ce que j’ai fais hier. Aujourd’hui pas de tramadol ce matin. Je suis dans un état pas possible, chaud, froid, sueur, engourdissement, éternuements, fatigue intense,… Je ne sais pas quoi faire. Hier je lui ai parlé de ma peur du symptôme de sevrage et elle m’a répondue  » c’est possible ». Aidez moi. J’ai une fille qui a besoin de moi et ça plus ma maladie c’est insupportable. Donnez moi des conseils svp en plus vue ce que ça me fait là j’ai vraiment envie d’arrêter cette saloperie temps que je suis lancée.
-                             </div>
-
+                <div class="art1">
+                    <h1>'.$sujet["sujet"].'</h1>
+                    <span class="auteur">Catégorie:'.$cat_name.'</span><br>
+                    <span class="date">'. $sujet["date_create"].'</span><br>
+                   
                 </div>
-                
-                  
-            </div>
-            <div class="cta-inner1  rounded">
-                  
-              <div>
-                 
-                <h6 class="nomuser1">Aniki</h6>
-                  <div class="">
-                    C'est la réponse aui est la hein !!!! je sais plus quoi ecrit tellemnt fatigué. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil mollitia perferendis quia incidunt quod iure dignissimos animi aut eligendi. Eius iure eligendi expedita dicta error, sunt molestias laboriosam officiis quis.
-                  </div>
-
-              </div>
-              
+             </div>
+             <a href="./afficherarticle.php?id='.$sujet["id"].'&cat='.$cat_id.'" target="_blank">Savoir plus...</a>
+             <br>
+            </article>';
+            }
             
-                
-          </div>
 
-          <div class="form-group purple-border">
-              <h6 class="nomuser">Aniki</h6>
-              <textarea class="form-control" id="exampleFormControlTextarea3" rows="2"></textarea>
-              
-            </div>
+            ?>
+
+            <!--<article class="box">
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>Savoir bien méditer !</h1>
+                    <span class="auteur">Catégorie: Heroine</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+                <br>
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>Avoir la foi en Dieu !</h1>
+                    <span class="auteur">Catégorie: Heroine</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                    
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+            </article>
+
+            <article class="box">
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>Les écoles sont fermée</h1>
+                    <span class="auteur">Catégorie: Overdose</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                    
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+                <br>
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>Les cahiers restent ouvert !</h1>
+                    <span class="auteur">Catégorie: Overdose</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                    
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+            </article>
             
-           
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-section about-heading">
-      <div class="container">
-        <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/about.jpg" alt="">
-        <div class="about-heading-content">
-          <div class="row">
-            <div class="col-xl-9 col-lg-10 mx-auto">
-              <div class="bg-faded rounded p-5">
-                <h2 class="section-heading mb-4">
-                  <span class="section-heading-upper">No drug's Space</span>
-                  <span class="section-heading-lower">notre plateforme</span>
-                </h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat ipsum odit veniam voluptas quod sapiente, sit atque placeat ipsa magnam velit fugit expedita nam animi earum, nisi labore ut blanditiis..</p>
-                <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit <em>odit</em>Lorem ipsum dolor sit amet consectetur adipisicing elit. In totam, labore rem reiciendis, repellat officiis nam quasi saepe sunt ducimus, velit inventore nemo ab perferendis laudantium mollitia ipsa aliquam quas..</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tempora, cum iure beatae voluptate expedita? Aliquid, numquam. Eligendi eaque tempora, fuga minus quia recusandae commodi ex impedit sint placeat hic?  </p>
-              </div>
+            <article class="box">
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>Corona, c'est pas la peine !</h1>
+                    <span class="auteur">Catégorie: Canabis</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                   
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+                <br>
+                <div class="cta-inner  rounded">
+                <div class="art1">
+                    <h1>OMS: Covid-19 fuck !</h1>
+                    <span class="auteur">Catégorie: Canabis</span><br>
+                    <span class="date">/ Jan 24 - 1min</span><br>
+                    
+                </div>
+                </div>
+                <a href="./afficherarticle.php" target="_blank">Savoir plus...</a>
+            </article>-->
+            
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+        </section>
+  
 
   
 
@@ -147,7 +178,7 @@
     </div>
   </footer>
 
-
+  <script src="script/app.js"></script>
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>

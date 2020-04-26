@@ -4,6 +4,52 @@
     header("location:../../index.php");
   }
 
+  include("../../db/db.php");
+
+  $error = [
+    "cat" =>"",
+    "titre"=>"",
+    "description"=>""
+  ];
+  $ok = "";
+  $db = Database::connexion();
+
+  $cats = findAllCat($db);
+
+    
+  if($_SERVER["REQUEST_METHOD"] === 'POST'){
+    $yes = true;
+    $titre = $_POST["titre"]?$_POST["titre"]:"";
+    $cat = $_POST["cat"]?intval($_POST["cat"]):"";
+    $description = $_POST["descr"]?$_POST["descr"]:"";
+
+    if(empty($titre)){
+      $yes = false;
+      $error["titre"] = "Ce champ est obligatoire";
+    }
+
+    if(empty($cat)){
+      $yes = false;
+      $error["cat"] = "Ce champ est obligatoire";
+    }
+
+    if(empty($description)){
+      $yes = false;
+      $error["description"] = "Ce champ est obligatoire";
+    }
+
+
+    if($yes){
+        $sujet = [$titre,intval($_SESSION["id"]),$description,$cat];
+        $ok = addSujet($db,$sujet)?"sujet ajouté":"sujet non ajouté";
+    }
+
+    
+  }
+
+
+  Database::deconnexion();
+ 
 ?>
 
 
@@ -77,7 +123,7 @@
                   
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form method="post">
                     <div class="row">
                      
                       
@@ -87,7 +133,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Titre</label>
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" name="titre">
                         </div>
                       </div>
                      
@@ -98,15 +144,18 @@
                         <div class="form-group">
                             
 
-                            <select name="pets" id="pet-select">
+                            <select name="cat" id="pet-select">
                                
                                 <option value="">--Svp choissisez une catégorie--</option>
-                                <option value="Crack">Crack</option>
-                                <option value="Canabis">Canabis</option>
-                                <option value="Heroine">Heroine</option>
-                                <option value="Overdose">Overdose</option>
+                                <?php 
+
+                                  foreach($cats as $key => $cat){
+                                    echo '<option value="'.$cat["id"].'">'.$cat["name"].'</option>';
+                                  }
+
+                                ?>
                             </select>
-                            
+                            <span class="error"><?php echo $error["cat"]; ?></span>
                         </div>
                       </div>
                      
@@ -118,13 +167,14 @@
                           <label>Description</label>
                           <div class="form-group">
                             <label class="bmd-label-floating"> Lorem ipsum dolor sit amet consectetur adipisicing elit.</label>
-                            <textarea class="form-control" rows="5"></textarea>
+                            <textarea class="form-control" rows="5" name="descr"></textarea>
                           </div>
                         </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">valider</button>
                     <div class="clearfix"></div>
+                    <?php echo $ok; ?>
                   </form>
                 </div>
               </div>

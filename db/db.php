@@ -36,6 +36,13 @@ function findClient($db,$email){
     return $pre->fetch();
 }
 
+function findClientwithId($db,$id){
+    $pre = $db->prepare("SELECT * FROM clients WHERE id=?");
+    $pre->execute([$id]);
+
+    return $pre->fetch();
+}
+
 
 function findArt($db,$id){
     $pre = $db->prepare("SELECT * FROM article WHERE id=?");
@@ -96,6 +103,41 @@ function updateArt($db,$data){
     return ($pre->execute($data))?true:false;
 }
 
+
+function findAllCat($db){
+    $pre = $db->query("SELECT * FROM categories");
+    return $pre?$pre->fetchAll():false;
+}
+
+function findCat($db,$id){
+    $pre = $db->prepare("SELECT * FROM categories WHERE id=?");
+    return $pre->execute([$id])?$pre->fetch():false;
+}
+
+function findAllSuj($db){
+    $pre = $db->query("SELECT * FROM forum");
+    return $pre?$pre->fetchAll():false;
+}
+
+function findSuj($db,$id){
+    $pre = $db->prepare("SELECT * FROM forum WHERE id=?");
+    return $pre->execute([$id])?$pre->fetch():false;
+}
+
+function addSujet($db,$datas){
+    $pre = $db->prepare("INSERT INTO forum(sujet,user_id,description,cat,date_create) VALUES(?,?,?,?,Now())");
+    return $pre->execute($datas)?true:false;
+}
+
+function addComment($db,$datas){
+    $pre = $db->prepare("INSERT INTO commentaires(user_id,sujet_id,comment,date_create) VALUES(?,?,?,Now())");
+    return $pre->execute($datas)?true:false;
+}
+
+function findComment($db,$id){
+    $pre = $db->prepare("SELECT * FROM commentaires WHERE sujet_id=?");
+    return $pre->execute([$id])?$pre->fetchAll():false;
+}
 
 
 

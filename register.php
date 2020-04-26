@@ -32,7 +32,17 @@
       }else if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
         $valide = false;
         $errors["email"] = "Veuillez saisir un mail correct svp !";
-      }
+      }else if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+        $req = $db->prepare("SELECT * FROM clients WHERE email=?");
+        $req->execute([$email]);
+        $user = $req->fetch();
+        if($user){
+          $valide = false;
+          $errors["email"] = "le mail existe deja !";
+          $user = null;
+        }
+        
+      } 
 
       if(!is_numeric($age)){
         $valide = false;

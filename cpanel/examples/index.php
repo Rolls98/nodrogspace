@@ -248,7 +248,7 @@
                   <p class="card-category">Récuperer password admin</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form method="post">
                     <div class="row">
                      
                       <div class="col-md-3">
@@ -281,30 +281,31 @@
                   <p class="card-category">Changer password admin</p>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form class="changePsd" method="POST">
                     <div class="row">
                      
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">password actuel</label>
-                          <input type="text" class="form-control">
+                          <input type="password" class="form-control" name="actu" id="actu">
                         </div>
                       </div> <br>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">Nouveau</label>
-                          <input type="text" class="form-control">
+                          <input type="password" class="form-control" name="nv" id="nv">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">Confirmer password</label>
-                          <input type="text" class="form-control">
+                          <input type="password" class="form-control" name="cnv" id="cnv">
                         </div>
                       </div>
                       <br><hr>
+                      <span style="color:white" class="psdChange"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">valider</button>
+                    <button type="submit" class="btn btn-primary pull-right" id="changePsd">valider</button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -338,6 +339,7 @@
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   
   <script src="../assets/js/material-dashboard.js?v=2.1.0"></script>
+  <script src="script/app.js"></script>
  
   <script src="../assets/demo/demo.js"></script>
   <script>
