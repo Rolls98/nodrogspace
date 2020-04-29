@@ -1,4 +1,82 @@
 
+<?php 
+
+  include("partials/session.php");
+  include("../../db/db.php");
+
+  $db = Database::connexion();
+  $type_allows = [".png",".jpg",".jpeg",".gif"];
+
+  $page = page($db);  
+
+
+  if($_SERVER["REQUEST_METHOD"] === "POST"){
+    $upload = true;
+    $header1 = $_POST["header1"]?$_POST["header1"]:$page["header1"];
+    $header2 = $_POST["header2"]?$_POST["header2"]:$page["header2"];
+    $header3 = $_POST["header3"]?$_POST["header3"]:$page["header3"];
+
+    $contenu3 = $_POST["contenu3"]?$_POST["contenu3"]:$page["contenu3"];
+
+    $image3 = $_FILES["image3"]["name"]?$_FILES["image3"]["name"]:$page["image3"];
+    $imageApro = $_FILES["imageApro"]["name"]?$_POST["imageApro"]:$page["imageApro"];
+
+    $tmp3 = $_FILES["image3"]["tmp_name"]?$_FILES["image3"]["tmp_name"]:null;
+    $aPro = $_FILES["imageApro"]["tmp_name"]?$_FILES["imageApro"]["tmp_name"]:null;
+
+    $type3 = strrchr($image3,".");
+    $tapro = strrchr($imageApro,".");
+
+     if(in_array($type3,$type_allows) || in_array($tapro,$type_allows)){
+         if($tmp3){
+      if(move_uploaded_file($tmp3,"../../img/blog/".$image3)){
+        
+      }else{
+        $error["image3"] = "not upload";
+        $upload = false;
+      }
+    }
+
+    if($aPro){
+      if(move_uploaded_file($aPro,"../../img/blog/".$imageApro)){
+        
+      }else{
+        $error["imageApro"] = "not upload";
+        $upload = false;
+      }
+    }
+  }else{
+     if($tmp3 || $imageApro){
+        $upload = false;
+      if($tmp3){
+        $error["image3"] = "type incorrect";
+      }else if($aPro){
+        $error["imageApro"] = "type incorrect";
+      }
+     }
+      
+  }
+
+    $hApro = $_POST["hApro"]?$_POST["hApro"]:$page["hApro"];
+
+    $ContenuApro = $_POST["ContenuApro"]?$_POST["ContenuApro"]:$page["ContenuApro"];
+
+    if(updatePage($db,[$header1,$header2,$header3,$contenu3,$image3,$imageApro,$hApro,$ContenuApro])){
+      $cool = "Modification effectuée avec succès";
+      $page = page($db);
+    }else{
+      $cool = "Modification non effectuée";
+    }
+
+  }
+
+  Database::deconnexion();
+
+  
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,49 +99,7 @@
 </head>
 
 <body class="dark-edition">
-  <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
-     
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a></div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          
-          <li class="nav-item  ">
-            <a class="nav-link" href="index.html">
-              <i class="material-icons">person</i>
-              <p>Mon Profile</p>
-            </a>
-          </li>
-          <li class="nav-item   ">
-            <a class="nav-link" href="addartcile.html">
-              <i class="material-icons">plus</i>
-              <p>Ajouter un article</p>
-            </a>
-          </li>
-          <li class="nav-item  ">
-            <a class="nav-link" href="tables.html">
-              <i class="material-icons">plus</i>
-              <p>Liste des utilisateurs </p>
-            </a>
-          </li>
-          <li class="nav-item active ">
-            <a class="nav-link" href="typography.html">
-              <i class="material-icons">plus</i>
-              <p>Typography</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">
-             
-              <p>Deconnection</p>
-            </a>
-          </li>
-         
-        </ul>
-      </div>
-    </div>
+    <?php $typo =true; include("partials/wrapper.php") ?>
     <div class="main-panel">
      
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -79,66 +115,66 @@
             </div>
             <div class="card-body">
               <div id="typography">
+                <form action="" method="post" enctype="multipart/form-data">
                 <div class="card-title">
                   <h2>Typographie</h2>
                 </div>
                 <div class="row">
                   <div class="tim-typo">
                     <h1>
-                      <span class="tim-note">Header 1</span>BIENVENUE SUR</h1>
-                      <input type="text" class="form-control">
+                      <span class="tim-note">Header 1</span><?php echo $page["header1"];?></h1>
+                      <input type="text" class="form-control" name="header1">
                   </div>
                   <div class="tim-typo">
                     <h2>
-                      <span class="tim-note">Header 2</span> No Drug's Space</h2>
-                      <input type="text" class="form-control">
+                      <span class="tim-note">Header 2</span> <?php echo $page["header2"];?></h2>
+                      <input type="text" class="form-control" name="header2">
                   </div>
                   <div class="tim-typo">
                     <h3>
        
-                      <span class="tim-note">Header 3</span>l'addiction</h3>
+                      <span class="tim-note">Header 3</span><?php echo $page["header3"];?></h3>
                       
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="header3">
                   </div>
                   <div class="tim-typo">
                     <h4>
                       <span class="tim-note">Contenu Header 3 </span>
-                      Les problèmes d'addictions sont de plus en plus fréquent chez 80% des jeunes.
-                      Aujourd'hui la consommation de drogue est un réel obstacle. 
-                      No drug's space vous aide à vous en sorti .
-                      Parler librement en tout anonymat avec des expérimentés</h4>
-                      <input type="text" class="form-control">
+                      <?php echo $page["contenu3"];?></h4>
+                      <input type="text" class="form-control" name="contenu3">
                   </div>
                   <div class="tim-typo">
                     <h5>
                       
-                      <span class="tim-note">Image header 3</span><img src="../assets/img/sly.jpg" width="20%" height="20%"></h5>
-                      <input type="file" class="form-control">
+                      <span class="tim-note">Image header 3</span><img src="../../img/blog/<?php echo $page["image3"] ?>" width="20%" height="20%"></h5>
+                      <input type="file" class="form-control" name="image3"><br>
+                      <?php echo isset($error["image3"])?$error["image3"]:""; ?>
                   </div>
                   <div class="tim-typo">
                     <h6>
-                      <span class="tim-note">Image à propos</span><img src="../assets/img/about.jpg" width="20%" height="20%"></h5></h6>
-                      <input type="file" class="form-control">
+                      <span class="tim-note">Image à propos</span><img src="../../img/blog/<?php echo $page["imageApro"] ?>" width="20%" height="20%"></h5></h6>
+                      <input type="file" class="form-control" name="imageApro"><br>
+                      <?php echo isset($error["imageApro"])?$error["imageApro"]:""; ?>
                     </div>
                   <div class="tim-typo">
                     <p>
                       <span class="tim-note">header à propos</span>
-                      notre plateforme</p>
-                      <input type="text" class="form-control">
+                      <?php echo $page["hApro"] ?></p>
+                      <input type="text" class="form-control" name="hApro">
                   </div>
                   <div class="tim-typo">
                     <p>
                       <span class="tim-note">Contenu à propos</span>
-                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                       Repellat ipsum odit veniam voluptas quod sapiente,
-                       sit atque placeat ipsa magnam velit fugit expedita nam animi earum, nisi labore ut blanditiis..  
+                     <?php echo $page["ContenuApro"] ?>  
                     </p>
-                      <input type="text" class="form-control">
+                      <text type="text" class="form-control" name="ContenuApro">
                   </div>
                   
-                    <a  href="#"  class="nav-link active" >valider</a>
+                    <button  href="#"  class="nav-link active" >valider</button><br>
+                    <?php echo isset($cool)?$cool:""; ?>
                 
                 </div>
+              </form>
               </div>
             </div>
           </div>

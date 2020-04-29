@@ -38,6 +38,11 @@ p {
   font-weight: 800;
 }
 
+
+.sujet{
+  min-width: 70vw !important;
+}
+
 .site-heading .site-heading-lower {
   font-size: 5rem;
   font-weight: 100;

@@ -1,17 +1,20 @@
 <?php 
-
+  include("db/db.php");
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+$db = Database::connexion();
+$page = page($db);
 
+Database::deconnexion();
 ?>
 
 <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper mb-3" style="color: rgb(58, 56, 56);"
-        >BIENVENUE SUR
+        ><?php echo $page["header1"] ?>
       </span>
       <span class="site-heading-lower" style="font-weight: bold;"
-        >No Drug's <span class="text-primary"> Space</span>
+        ><?php echo substr($page["header2"],0,9) ?> <span class="text-primary"> <?php echo substr($page["header2"],9) ?></span>
       </span>
     </h1>
 

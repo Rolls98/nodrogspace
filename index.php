@@ -28,17 +28,14 @@
   <section class="page-section clearfix">
     <div class="container">
       <div class="intro">
-        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="img/sly.jpg" alt="" />
+        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="img/blog/<?php echo $page["image3"] ?>" alt="" />
         <div class="intro-text left-0 text-center bg-faded p-5 rounded">
           <h2 class="section-heading mb-4">
-            <span class="section-heading-upper">No Drug's Space</span>
-            <span class="section-heading-lower">l'addiction</span>
+            <span class="section-heading-upper"><?php echo $page["header2"] ?></span>
+            <span class="section-heading-lower"><?php echo $page["header3"] ?></span>
           </h2>
           <p class="mb-3">
-            Les problèmes d'addictions sont de plus en plus fréquent chez 80%
-            des jeunes.Aujourd'hui la consommation de drogue est un réel
-            obstacle. No drug's space vous aide à vous en sorti .Parler
-            librement en tout anonymat avec des expérimentés
+            <?php echo $page["contenu3"] ?>
           </p>
           <div class="intro-button mx-auto">
             <a class="btn btn-primary btn-xl" href="login.html" style="color: rgb(37, 37, 37);">Commencer</a>

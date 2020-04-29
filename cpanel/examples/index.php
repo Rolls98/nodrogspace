@@ -214,7 +214,7 @@
                         <div class="form-group">
                           <label>Description</label>
                           <div class="form-group">
-                            <label class="bmd-label-floating"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus unde quos velit optio eius rerum quia perspiciatis et voluptatum, voluptates quod impedit neque quisquam delectus similique repellat in blanditiis officia!.</label>
+                            <label class="bmd-label-floating">veuillez entre votre description ici</label>
                             <textarea class="form-control" rows="5" name="description"><?php echo $description; ?></textarea>
                           </div>
                           <span style="color:red"><?php echo $error["description"] ?></span>

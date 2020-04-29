@@ -8,6 +8,7 @@
 
   if(is_numeric($id) && is_numeric($cat_id)){
     $sujet = findSuj($db,$id);
+    $sujet["user"] = findClientwithId($db,$sujet["user_id"]);
     $cat = findCat($db,$cat_id);
     if($sujet != false && $cat != false && intval($sujet["cat"]) === $cat_id){
         if($_SERVER["REQUEST_METHOD"] === "POST"){
@@ -92,20 +93,22 @@
          
           <div class="col-xl-9 mx-auto">
           
-            <div class="cta-inner  rounded">
+            <div class="cta-inner sujet  rounded">
                 <div class="container">
                 <div class="">
-                      <img alt="" class="" src="" width="35" height="35"> 
+                      <img alt="profile user" class="" src="img/users/<?php echo $sujet["user"]["image"] ?>" width="35" height="35"> 
                 </div>
                 <div class="">
+                 <strong><?php echo $sujet["user"]["nom"] ?></strong><br>
                  <strong><?php echo $sujet["sujet"] ?></strong><br>
                 <strong class="categorie" id="categorie" ><span class="auteur">Catégorie: <?php echo $cat["name"] ?></span></strong>
                                    <br>
-                <span class="date">/ <?php echo $sujet["date_create"] ?></span><br><br>
+                <span class="date"><?php echo $sujet["date_create"] ?></span><br><br>
                 <section class="masquer">
                     <p>
                         <?php echo $sujet["description"] ?>
                     </p>
+                
 
            
   </section>

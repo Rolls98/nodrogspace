@@ -37,7 +37,7 @@
               <p>Liste des articles </p>
             </a>
           </li>
-          <li class="nav-item  <?php echo isset($type)?$active:"" ?>">
+          <li class="nav-item  <?php echo isset($typo)?$active:"" ?>">
             <a class="nav-link" href="typography.php">
               <i class="material-icons">plus</i>
               <p>Typography</p>

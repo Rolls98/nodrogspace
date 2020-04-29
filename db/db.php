@@ -139,6 +139,16 @@ function findComment($db,$id){
     return $pre->execute([$id])?$pre->fetchAll():false;
 }
 
+function page($db){
+    $page = $db->query("SELECT * FROM pages");
+    return $page->fetch();
+}
+
+function updatePage($db,$infos){
+    $pre = $db->prepare("UPDATE pages SET header1=?,header2=?,header3=?,contenu3=?,image3=?,imageApro=?,hApro=?,ContenuApro=?");
+    return $pre->execute($infos)?true:false;
+}
+
 
 
 

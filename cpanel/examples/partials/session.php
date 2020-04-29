@@ -5,7 +5,7 @@
     }
 
     if(!$_SESSION["a_connected"]){
-        header("location:../login.php");
+        header("location: login.php");
     }
 
 ?>
