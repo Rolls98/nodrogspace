@@ -4,7 +4,7 @@ class Database{
     private static $host = "localhost";
     private static $user = "root";
     private static $dbName = "blog";
-    private static $password = "02491383Ro";
+    private static $password = "";
     private static $connexion = null;
 
     public  function connexion(){
