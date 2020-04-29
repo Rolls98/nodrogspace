@@ -1,12 +1,18 @@
 <?php 
-  include("db/db.php");
+  
   if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-$db = Database::connexion();
+
+if(!isset($db)){
+  include("db/db.php");
+  $db = Database::connexion();
+}
+
 $page = page($db);
 
 Database::deconnexion();
+
 ?>
 
 <h1 class="site-heading text-center text-white d-none d-lg-block">

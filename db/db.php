@@ -4,7 +4,7 @@ class Database{
     private static $host = "localhost";
     private static $user = "root";
     private static $dbName = "blog";
-    private static $password = "";
+    private static $password = "02491383Ro";
     private static $connexion = null;
 
     public  function connexion(){
@@ -69,7 +69,7 @@ function findAdmin($db,$email){
 }
 
 function addClient($db,$coords){
-    $req = $db->prepare("INSERT INTO clients(nom,email,age,u_password,image,date_inscription) VALUES(?,?,?,?,?,Now())");
+    $req = $db->prepare("INSERT INTO clients(username,addresse,ville,pays,description,nom,email,age,u_password,image,date_inscription) VALUES('','','','','',?,?,?,?,?,Now())");
     return ($req->execute($coords))?true:false;
 }
 
