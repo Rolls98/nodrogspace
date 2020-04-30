@@ -84,7 +84,7 @@
     </script>
 
   <?php $forum = true ?>
-  <?php include("header.php") ?>
+  <?php include("header.php");$page = page($db); ?>
   <section class="page-section cta">
       <div class="container">
         <div class="row">
@@ -149,19 +149,17 @@
 
     <section class="page-section about-heading">
       <div class="container">
-        <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/about.jpg" alt="">
+        <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="img/blog/<?php echo $page["imageApro"]?>" alt="">
         <div class="about-heading-content">
           <div class="row">
             <div class="col-xl-9 col-lg-10 mx-auto">
               <div class="bg-faded rounded p-5">
                 <h2 class="section-heading mb-4">
-                  <span class="section-heading-upper">No drug's Space</span>
-                  <span class="section-heading-lower">notre plateforme</span>
+                  <span class="section-heading-upper"><?php echo $page["header2"] ?></span>
+                  <span class="section-heading-lower"><?php echo $page["hApro"] ?></span>
                 </h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellat ipsum odit veniam voluptas quod sapiente, sit atque placeat ipsa magnam velit fugit expedita nam animi earum, nisi labore ut blanditiis..</p>
-                <p class="mb-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit <em>odit</em>Lorem ipsum dolor sit amet consectetur adipisicing elit. In totam, labore rem reiciendis, repellat officiis nam quasi saepe sunt ducimus, velit inventore nemo ab perferendis laudantium mollitia ipsa aliquam quas..</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur tempora, cum iure beatae voluptate expedita? Aliquid, numquam. Eligendi eaque tempora, fuga minus quia recusandae commodi ex impedit sint placeat hic?  </p>
-              </div>
+                    <?php echo $page["ContenuApro"] ?>
+                 </div>
             </div>
           </div>
         </div>

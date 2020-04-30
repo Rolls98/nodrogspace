@@ -25,9 +25,9 @@
   
   <?php 
 
-    include("db/db.php");
+    
 
-    $db = Database::connexion();
+    
     
     $articles = rcpArticles($db);
 
