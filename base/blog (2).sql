@@ -44,12 +44,6 @@ CREATE TABLE `admins` (
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Déchargement des données de la table `admins`
---
-
-INSERT INTO `admins` (`id`, `username`, `nom`, `prenom`, `email`, `addresse`, `ville`, `pays`, `description`, `image`, `a_password`, `update_psd`, `created_date`) VALUES
-(1, 'anleboss2.19', 'Aniki', 'leBoss', 'Aniki@leboss.com', 'BP KS 105', 'Abidjan', 'Côte D\'ivoire', 'Description\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus unde quos velit optio eius rerum quia perspiciatis et voluptatum, voluptates quod impedit neque quisquam delectus similique repellat in blanditiis officia!.', 'default_icon.jpg', 'f600fdf5deebf577267fdaa9e54df05a417c6da0444e124f0aa84fa5aaf721ba', '2020-04-22 23:45:18', '2020-04-22 23:45:18');
 
 -- --------------------------------------------------------
 
@@ -144,17 +138,7 @@ CREATE TABLE `commentaires` (
   `date_create` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Déchargement des données de la table `commentaires`
---
 
-INSERT INTO `commentaires` (`id`, `user_id`, `sujet_id`, `comment`, `date_create`) VALUES
-(2, 1, 2, 'Depuis quand Utilisez-vous la drogue??', '2020-04-26 15:49:20'),
-(3, 1, 2, 'Repondez-moi', '2020-04-26 16:10:19'),
-(4, 1, 2, 'lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem', '2020-04-26 16:20:22'),
-(5, 3, 2, 'Vous avez abus&amp;eacute; Monsieur, c\'est pourquoi!', '2020-04-26 16:32:47');
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `forum`
