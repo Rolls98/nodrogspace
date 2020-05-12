@@ -37,6 +37,12 @@
               <p>Liste des articles </p>
             </a>
           </li>
+          <li class="nav-item  <?php echo isset($suj)?$active:"" ?>">
+            <a class="nav-link" href="sujets.php">
+              <i class="material-icons">plus</i>
+              <p>Liste des sujets </p>
+            </a>
+          </li>
           <li class="nav-item  <?php echo isset($typo)?$active:"" ?>">
             <a class="nav-link" href="typography.php">
               <i class="material-icons">plus</i>

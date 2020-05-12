@@ -124,6 +124,11 @@ function findSuj($db,$id){
     return $pre->execute([$id])?$pre->fetch():false;
 }
 
+function delSuj($db,$id){
+    $req = $db->prepare("DELETE FROM forum WHERE id=?");
+    return ($req->execute([$id]))?true:false;
+}
+
 function addSujet($db,$datas){
     $pre = $db->prepare("INSERT INTO forum(sujet,user_id,description,cat,date_create) VALUES(?,?,?,?,Now())");
     return $pre->execute($datas)?true:false;
